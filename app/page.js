@@ -10,39 +10,55 @@ export default async function Home() {
     .order('created_at', { ascending: false })
 
   return (
-    <main className="max-w-3xl mx-auto p-8">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">📋 게시판</h1>
+    <main className="max-w-2xl mx-auto px-6 py-16">
+      <header className="flex items-baseline justify-between mb-12">
+        <h1 className="text-2xl font-medium tracking-tight">Board</h1>
         <Link
           href="/new"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="text-sm text-gray-500"
         >
-          글쓰기
+          새 글
         </Link>
-      </div>
+      </header>
 
-      {error && <p className="text-red-500">에러: {error.message}</p>}
-
-      {posts && posts.length === 0 && (
-        <p className="text-gray-500">아직 게시글이 없습니다.</p>
+      {error && (
+        <p className="text-sm text-gray-500">
+          불러올 수 없습니다.
+        </p>
       )}
 
-      <ul className="divide-y">
+      {posts && posts.length === 0 && (
+        <p className="text-sm text-gray-400">
+          아직 작성된 글이 없습니다.
+        </p>
+      )}
+
+      <ul className="space-y-1">
         {posts?.map((post) => (
-          <li key={post.id} className="py-4">
+          <li key={post.id}>
             <Link
               href={`/posts/${post.id}`}
-              className="block hover:bg-gray-50 p-2 rounded"
+              className="flex items-baseline justify-between py-3 border-b border-gray-100 group"
             >
-              <h2 className="text-xl font-semibold">{post.title}</h2>
-              <p className="text-sm text-gray-500 mt-1">
-                {post.author || '익명'} ·{' '}
-                {new Date(post.created_at).toLocaleString('ko-KR')}
-              </p>
+              <span className="text-[15px] text-gray-900 truncate pr-4">
+                {post.title}
+              </span>
+              <span className="text-xs text-gray-400 tabular shrink-0">
+                {formatDate(post.created_at)}
+              </span>
             </Link>
           </li>
         ))}
       </ul>
     </main>
   )
+}
+
+function formatDate(iso) {
+  const d = new Date(iso)
+  const now = new Date()
+  const sameYear = d.getFullYear() === now.getFullYear()
+  const month = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return sameYear ? `${month}.${day}` : `${d.getFullYear()}.${month}.${day}`
 }
