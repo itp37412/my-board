@@ -1,38 +1,29 @@
-@import "tailwindcss";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #0a0a0a;
-  --muted: #6b7280;
-  --border: #e5e7eb;
-  --hover: #f9fafb;
-}
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-}
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Pretendard",
-    "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
-  font-feature-settings: "ss01", "ss02";
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+export const metadata = {
+  title: "Board",
+  description: "My first CRUD board",
+};
 
-/* 숫자를 깔끔하게 (tabular figures) */
-.tabular {
-  font-variant-numeric: tabular-nums;
-}
-
-/* 링크 호버 효과 */
-a {
-  transition: opacity 0.15s ease;
-}
-
-a:hover {
-  opacity: 0.6;
+export default function RootLayout({ children }) {
+  return (
+    <html lang="ko">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        {children}
+      </body>
+    </html>
+  );
 }
