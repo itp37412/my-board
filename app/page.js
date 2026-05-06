@@ -33,23 +33,26 @@ export default async function Home() {
         </p>
       )}
 
-      <ul className="space-y-1">
-        {posts?.map((post) => (
-          <li key={post.id}>
-            <Link
-              href={`/posts/${post.id}`}
-              className="flex items-baseline justify-between py-3 border-b border-gray-100 group"
-            >
-              <span className="text-[15px] text-gray-900 truncate pr-4">
-                {post.title}
-              </span>
-              <span className="text-xs text-gray-400 tabular shrink-0">
-                {formatDate(post.created_at)}
-              </span>
-            </Link>
-          </li>
-        ))}
-      </ul>
+  <ul className="space-y-1">
+  {posts?.map((post) => (
+    <li key={post.id}>
+      <Link
+        href={`/posts/${post.id}`}
+        className="flex items-baseline gap-4 py-3 border-b border-gray-100"
+      >
+        <span className="text-[15px] text-gray-900 truncate flex-1">
+          {post.title}
+        </span>
+        <span className="text-xs text-gray-400 shrink-0">
+          {post.author || '익명'}
+        </span>
+        <span className="text-xs text-gray-400 tabular shrink-0 w-12 text-right">
+          {formatDate(post.created_at)}
+        </span>
+      </Link>
+    </li>
+  ))}
+</ul>
     </main>
   )
 }
